@@ -12,6 +12,6 @@ output "sa_blob_endpoint" {
 
 # Output Vnet Id
 output "vnet_id" {
-  description = "Vnet Id"
+  description = "The Virtual network Id"
   value       = azurerm_virtual_network.cmaz-65725fc3-mod3-vnet.id
 }
