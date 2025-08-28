@@ -1,7 +1,7 @@
 # Output the resource group Id
 output "resource_group_id" {
   description = "The resource group Id"
-  value       = azurerm_resource_group.cmaz-65725fc3-mod3-rg.id
+  value       = azurerm_resource_group.cmaz-65725fc3-mod3-rg.rg_id
 }
 
 # Output Storage account blob service primary endpoint
