@@ -44,6 +44,11 @@ variable "nic_name" {
   description = "nic name"
 }
 
+variable "ip_name" {
+  type        = string
+  description = "ip config name"
+}
+
 variable "nsg_rule1_name" {
   type        = string
   description = "nsg rule 1"
@@ -60,7 +65,7 @@ variable "admin_username" {
   sensitive   = true
 }
 
-variable "admin_password" {
+variable "vm_password" {
   type        = string
   description = "vm password"
   sensitive   = true

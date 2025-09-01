@@ -31,11 +31,12 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "internal"
+    name                          = var.ip_name
     subnet_id                     = azurerm_subnet.subnet1.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
+  tags = var.default_tag
 }
 
 # Create PIP
@@ -55,8 +56,8 @@ resource "azurerm_network_security_group" "nsg" {
   name                = var.nsg_name
   location            = var.resource_group_location
   resource_group_name = azurerm_resource_group.rg.name
+  tags                = var.default_tag
 
-  tags = var.default_tag
 }
 
 # Create NSG rule1
@@ -105,7 +106,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     azurerm_network_interface.nic.id
   ]
 
-  admin_password                  = var.admin_password
+  admin_password                  = var.vm_password
   disable_password_authentication = false
 
   os_disk {
@@ -132,7 +133,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
       type     = "ssh"
       host     = azurerm_public_ip.pip.ip_address
       user     = var.admin_username
-      password = var.admin_password
+      password = var.vm_password
       timeout  = "5m"
     }
   }
