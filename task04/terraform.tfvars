@@ -11,7 +11,7 @@ nic_name                = "cmaz-65725fc3-mod4-nic"
 nsg_rule1_name          = "AllowHTTP"
 nsg_rule2_name          = "AllowSSH"
 admin_username          = "zeus"
-admin_password          = "7jACH2@spv61"
+
 # Number variable
 
 
