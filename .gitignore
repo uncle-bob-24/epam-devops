@@ -7,7 +7,6 @@
 
 # Ignore Terraform variable override files
 **/*.tfoverride
-**/*.tfvars
 **/*.tfvars.json
 
 # Ignore CLI configuration files
