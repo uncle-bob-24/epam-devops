@@ -8,13 +8,13 @@ module "app_service_plans" {
   source = "./modules/app_service_plan"
 
   app_service_plans = var.app_service_plans
-  depends_on = [module.resource_groups]
+  depends_on        = [module.resource_groups]
 }
 
 module "web_apps" {
   source = "./modules/app_service"
 
-  web_apps = var.web_apps
+  web_apps   = var.web_apps
   depends_on = [module.app_service_plans]
 }
 

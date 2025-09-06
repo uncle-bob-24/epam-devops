@@ -6,7 +6,7 @@ variable "app_service_plans" {
     sku_tier            = string
     sku_size            = string
     worker_count        = number
-    os_type = string
+    os_type             = string
     tags                = map(string)
   }))
 }

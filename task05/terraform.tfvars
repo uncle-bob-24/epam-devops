@@ -57,16 +57,16 @@ web_apps = {
     app_service_plan_id = "/subscriptions/e887a2a5-320e-4655-a4b3-6271b168e9df/resourceGroups/cmaz-65725fc3-mod5-rg-01/providers/Microsoft.Web/serverFarms/cmaz-65725fc3-mod5-asp-01"
     ip_restrictions = [
       {
-        name        = "allow-ip"
+        name     = "allow-ip"
         type     = "ip_address"
-        value          = "18.153.146.156/32"
-        priority    = 100
+        value    = "18.153.146.156/32"
+        priority = 100
       },
       {
-        name        = "allow-tm"
+        name     = "allow-tm"
         type     = "service_tag"
-        value = "AzureTrafficManager"
-        priority    = 200
+        value    = "AzureTrafficManager"
+        priority = 200
       }
     ]
     tags = {
@@ -80,16 +80,16 @@ web_apps = {
     app_service_plan_id = "/subscriptions/e887a2a5-320e-4655-a4b3-6271b168e9df/resourceGroups/cmaz-65725fc3-mod5-rg-02/providers/Microsoft.Web/serverFarms/cmaz-65725fc3-mod5-asp-02"
     ip_restrictions = [
       {
-        name        = "allow-ip"
+        name     = "allow-ip"
         type     = "ip_address"
-        value          = "18.153.146.156/32"
-        priority    = 100
+        value    = "18.153.146.156/32"
+        priority = 100
       },
       {
-        name        = "allow-tm"
+        name     = "allow-tm"
         type     = "service_tag"
-        value = "AzureTrafficManager"
-        priority    = 200
+        value    = "AzureTrafficManager"
+        priority = 200
       }
     ]
     tags = {
