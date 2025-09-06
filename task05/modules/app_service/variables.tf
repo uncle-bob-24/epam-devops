@@ -8,6 +8,7 @@ variable "web_apps" {
       name     = string
       typ      = string
       value    = string
+      action   = string
       priority = number
     }))
     tags = map(string)

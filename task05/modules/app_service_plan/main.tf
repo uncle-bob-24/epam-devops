@@ -6,13 +6,8 @@ resource "azurerm_service_plan" "asp" {
   location            = each.value.location
   sku_name            = each.value.sku_size
   os_type             = each.value.os_type
-  /* 
-  sku {
-    tier     = each.value.sku_tier
-    size     = each.value.sku_size
-    capacity = each.value.worker_count
-  }
-*/
+  worker_count        = each.value.worker_count
+
 
   tags = each.value.tags
 }

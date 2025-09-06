@@ -60,13 +60,22 @@ web_apps = {
         name     = "allow-ip"
         typ      = "ip_address"
         value    = "18.153.146.156/32"
+        action   = "allow"
         priority = 100
       },
       {
         name     = "allow-tm"
         typ      = "service_tag"
         value    = "AzureTrafficManager"
+        action   = "allow"
         priority = 200
+      },
+      {
+        name     = "deny-all"
+        typ      = "ip_address"
+        value    = "0.0.0.0/0"
+        action   = "deny"
+        priority = 300
       }
     ]
     tags = {
@@ -83,13 +92,22 @@ web_apps = {
         name     = "allow-ip"
         typ      = "ip_address"
         value    = "18.153.146.156/32"
+        action   = "Allow"
         priority = 100
       },
       {
         name     = "allow-tm"
         typ      = "service_tag"
         value    = "AzureTrafficManager"
+        action   = "Allow"
         priority = 200
+      },
+      {
+        name     = "deny-all"
+        typ      = "ip_address"
+        value    = "0.0.0.0/0"
+        action   = "Deny"
+        priority = 300
       }
     ]
     tags = {
