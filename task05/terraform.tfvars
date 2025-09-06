@@ -60,21 +60,21 @@ web_apps = {
         name     = "allow-ip"
         typ      = "ip_address"
         value    = "18.153.146.156/32"
-        action   = "allow"
+        action   = "Allow"
         priority = 100
       },
       {
         name     = "allow-tm"
         typ      = "service_tag"
         value    = "AzureTrafficManager"
-        action   = "allow"
+        action   = "Allow"
         priority = 200
       },
       {
         name     = "deny-all"
         typ      = "ip_address"
         value    = "0.0.0.0/0"
-        action   = "deny"
+        action   = "Deny"
         priority = 300
       }
     ]
