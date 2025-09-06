@@ -58,13 +58,13 @@ web_apps = {
     ip_restrictions = [
       {
         name     = "allow-ip"
-        type     = "ip_address"
+        typ      = "ip_address"
         value    = "18.153.146.156/32"
         priority = 100
       },
       {
         name     = "allow-tm"
-        type     = "service_tag"
+        typ      = "service_tag"
         value    = "AzureTrafficManager"
         priority = 200
       }
@@ -81,13 +81,13 @@ web_apps = {
     ip_restrictions = [
       {
         name     = "allow-ip"
-        type     = "ip_address"
+        typ      = "ip_address"
         value    = "18.153.146.156/32"
         priority = 100
       },
       {
         name     = "allow-tm"
-        type     = "service_tag"
+        typ      = "service_tag"
         value    = "AzureTrafficManager"
         priority = 200
       }

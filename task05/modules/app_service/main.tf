@@ -16,8 +16,8 @@ resource "azurerm_windows_web_app" "app" {
         name        = ip_restriction.value.name
         action      = "Allow"
         priority    = ip_restriction.value.priority
-        ip_address  = ip_restriction.value.type == "ip_address" ? ip_restriction.value.value : null
-        service_tag = ip_restriction.value.type == "service_tag" ? ip_restriction.value.value : null
+        ip_address  = ip_restriction.value.typ == "ip_address" ? ip_restriction.value.value : null
+        service_tag = ip_restriction.value.typ == "service_tag" ? ip_restriction.value.value : null
       }
     }
   }

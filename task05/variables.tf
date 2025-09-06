@@ -29,7 +29,7 @@ variable "web_apps" {
     app_service_plan_id = string
     ip_restrictions = list(object({
       name     = string
-      type     = string
+      typ      = string
       value    = string
       priority = number
     }))
