@@ -75,7 +75,7 @@ web_apps = {
         typ      = "ip_address"
         value    = "0.0.0.0/0"
         action   = "Deny"
-        priority = 300
+        priority = 999999
       }
     ]
     tags = {
@@ -107,7 +107,7 @@ web_apps = {
         typ      = "ip_address"
         value    = "0.0.0.0/0"
         action   = "Deny"
-        priority = 300
+        priority = 999999
       }
     ]
     tags = {
