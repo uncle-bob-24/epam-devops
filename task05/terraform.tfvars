@@ -69,13 +69,6 @@ web_apps = {
         value    = "AzureTrafficManager"
         action   = "Allow"
         priority = 200
-      },
-      {
-        name     = "deny-all"
-        typ      = "ip_address"
-        value    = "0.0.0.0/0"
-        action   = "Deny"
-        priority = 999999
       }
     ]
     tags = {
@@ -101,13 +94,6 @@ web_apps = {
         value    = "AzureTrafficManager"
         action   = "Allow"
         priority = 200
-      },
-      {
-        name     = "deny-all"
-        typ      = "ip_address"
-        value    = "0.0.0.0/0"
-        action   = "Deny"
-        priority = 999999
       }
     ]
     tags = {
