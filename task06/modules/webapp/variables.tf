@@ -5,8 +5,8 @@ variable "resource_group_name" { type = string }
 variable "location" { type = string }
 variable "dotnet_version" { type = string }
 variable "tags" { type = map(string) }
-variable "sql_connection_string" { type = string }
-variable "os_type" {
+variable "sql_connection_string" {
   type      = string
   sensitive = true
 }
+variable "os_type" { type = string }
