@@ -6,7 +6,7 @@ output "sql_connection_string" {
     var.sql_admin_name,                                            # {sql_user_name}
     random_password.sql_admin_password.result                      # {sql_user_password}
   )
-  sensitive = true # Marking the connection string as sensitive
+  sensitive = true
 }
 
 output "sql_server_fqdn" {
