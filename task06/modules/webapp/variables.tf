@@ -6,4 +6,7 @@ variable "location" { type = string }
 variable "dotnet_version" { type = string }
 variable "tags" { type = map(string) }
 variable "sql_connection_string" { type = string }
-variable "os_type" { type = string }
+variable "os_type" {
+  type      = string
+  sensitive = true
+}

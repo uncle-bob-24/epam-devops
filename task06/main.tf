@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = local.resource_group_name # Dynamically generated from locals.tf
+  name     = local.rg_name # Dynamically generated from locals.tf
   location = var.region
   tags     = var.tags
 }
