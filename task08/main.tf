@@ -139,8 +139,8 @@ resource "kubectl_manifest" "service" {
 resource "kubectl_manifest" "secret_provider" {
   yaml_body = templatefile("${path.module}/k8s-manifests/secret-provider.yaml.tftpl", {
     kv_name                    = local.keyvault_name # Add Key Vault name as `kv_name`
-    redis_url_secret_name      = var.redis_hostname_secret
-    redis_password_secret_name = var.redis_primary_key_secret
+    redis_url_secret_name      = module.redis.redis_hostname_secret_value
+    redis_password_secret_name = module.redis.redis_primary_key_secret_value
     tenant_id                  = data.azurerm_client_config.current.tenant_id # Azure Tenant ID
     aks_kv_access_identity_id  = module.aks.aks_user_object_id                # AKS-managed identity ID for Key Vault access
   })
