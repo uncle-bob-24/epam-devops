@@ -1,4 +1,4 @@
-region                   = "East US"
+region                   = "West US"
 prefix                   = "cmtr-65725fc3-mod8"
 aci_sku                  = "Standard"
 aci_cpu                  = 2
