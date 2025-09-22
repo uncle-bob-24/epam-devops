@@ -9,5 +9,5 @@ locals {
   aci_name          = format("%s-ci", var.prefix)
   dns_name_label    = format("%s-dns", var.prefix)
   aks_name          = format("%s-aks", var.prefix)
-
+  aks_kv_identity_name = "${local.aks_name}-kv-identity"
 }
