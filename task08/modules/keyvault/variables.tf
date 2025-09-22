@@ -1,30 +1,24 @@
-variable "name" {
-  description = "Name of the Key Vault"
-  type        = string
-}
-
-variable "location" {
-  description = "Azure region"
+variable "keyvault_name" {
+  description = "Name of the Azure Key Vault"
   type        = string
 }
 
 variable "resource_group_name" {
-  description = "Name of the resource group"
+  description = "The name of the resource group for the Azure Key Vault"
   type        = string
 }
 
-variable "tenant_id" {
-  description = "Azure tenant ID"
+variable "location" {
+  description = "Azure region to deploy the Key Vault"
   type        = string
 }
 
-variable "object_id" {
-  description = "Object ID for access policy"
+variable "sku" {
+  description = "SKU for the Azure Key Vault (standard or premium)"
   type        = string
 }
 
 variable "tags" {
-  description = "Tags to apply to resources"
+  description = "Tags to apply to the Azure Key Vault"
   type        = map(string)
-  default     = {}
 }

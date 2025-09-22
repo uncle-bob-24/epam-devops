@@ -1,14 +1,15 @@
+# Create AKS Cluster
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.name
-  location            = var.location
+  name                = var.aks_name
   resource_group_name = var.resource_group_name
-  dns_prefix          = var.name
+  location            = var.location
+  dns_prefix          = var.aks_name
 
   default_node_pool {
-    name            = "system"
-    node_count      = 1
-    vm_size         = "Standard_D2ads_v5"
-    os_disk_type    = "Ephemeral"
+    name            = var.node_pool_name
+    vm_size         = var.node_vm_size
+    node_count      = var.node_count
+    os_disk_type    = var.os_disk_type
     os_disk_size_gb = 30
   }
 
@@ -16,26 +17,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 
-  key_vault_secrets_provider {
-    secret_rotation_enabled = true
-  }
-
   tags = var.tags
 }
 
+# Add Role Assignment: Allow AKS to Pull from ACR
 resource "azurerm_role_assignment" "acr_pull" {
-  principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-  role_definition_name             = "AcrPull"
-  scope                            = var.acr_id
-  skip_service_principal_aad_check = true
-}
-
-resource "azurerm_key_vault_access_policy" "aks_access" {
-  key_vault_id = var.key_vault_id
-  tenant_id    = azurerm_kubernetes_cluster.aks.identity[0].tenant_id
-  object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-
-  secret_permissions = [
-    "Get"
-  ]
+  scope                = var.acr_id
+  principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+  role_definition_name = "AcrPull"
 }

@@ -1,14 +1,6 @@
-output "key_vault_id" {
-  description = "ID of the Key Vault"
-  value       = azurerm_key_vault.kv.id
+# Output: Key Vault ID
+output "keyvault_id" {
+  description = "The ID of the Azure Key Vault"
+  value       = azurerm_key_vault.keyvault.id
 }
 
-output "key_vault_name" {
-  description = "Name of the Key Vault"
-  value       = azurerm_key_vault.kv.name
-}
-
-output "key_vault_uri" {
-  description = "URI of the Key Vault"
-  value       = azurerm_key_vault.kv.vault_uri
-}

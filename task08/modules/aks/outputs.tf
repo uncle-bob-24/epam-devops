@@ -1,20 +1,17 @@
-output "aks_id" {
-  description = "ID of the AKS cluster"
-  value       = azurerm_kubernetes_cluster.aks.id
-}
-
+# Cluster Credentials for Kubernetes CLI (kubectl)
 output "kube_config" {
-  description = "Kubernetes configuration"
-  value       = azurerm_kubernetes_cluster.aks.kube_config
+  description = "The kube_config generated for access to the AKS cluster"
+  value       = azurerm_kubernetes_cluster.aks.kube_config_raw
   sensitive   = true
 }
 
-output "kubelet_identity_object_id" {
-  description = "Object ID of the kubelet identity"
-  value       = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+# Managed Kubernetes Cluster Hostname
+output "aks_fqdn" {
+  description = "The FQDN of the AKS cluster API"
+  value       = azurerm_kubernetes_cluster.aks.fqdn
 }
 
-output "cluster_identity_principal_id" {
-  description = "Principal ID of the cluster identity"
-  value       = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+output "aks_user_object_id" {
+  description = "Managed identity object ID for AKS to access Key Vault"
+  value       = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 }
