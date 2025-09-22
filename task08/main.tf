@@ -22,7 +22,7 @@ module "keyvault" {
 resource "azurerm_key_vault_access_policy" "aks_identity_kv_access" {
   tenant_id          = data.azurerm_client_config.current.tenant_id
   object_id          = module.aks.aks_user_object_id
-  key_vault_id = module.keyvault.keyvault_id
+  key_vault_id       = module.keyvault.keyvault_id
   secret_permissions = ["Get", "List"]
   depends_on         = [module.keyvault]
 }
