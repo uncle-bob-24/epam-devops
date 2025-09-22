@@ -19,7 +19,7 @@ resource "azurerm_container_registry_task" "acr_task" {
 
   docker_step {
     dockerfile_path      = var.dockerfile_path
-    context_path         = "${trimsuffix(var.repository_url, ".git")}/tree/main/${var.dockerfile_path}"
+    context_path         = "${trimsuffix(var.repository_url, ".git")}/tree/main/${trimsuffix(var.dockerfile_path, "/Dockerfile")}"
     context_access_token = var.git_pat
     image_names          = ["${var.docker_image_name}:latest"]
   }
