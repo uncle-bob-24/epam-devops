@@ -2,6 +2,7 @@ resource "azurerm_container_group" "aci" {
   name                = var.aci_name
   resource_group_name = var.resource_group_name
   location            = var.location
+  ip_address_type     = "Public"
   os_type             = "Linux"
   sku                 = var.aci_sku
 
@@ -14,6 +15,7 @@ resource "azurerm_container_group" "aci" {
     # Define public ports for external access
     ports {
       port = var.container_port
+      protocol = "TCP"
     }
 
     # Unsecured environment variables

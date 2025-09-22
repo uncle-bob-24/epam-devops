@@ -77,8 +77,8 @@ module "aci" {
   acr_username        = module.acr.acr_username
   acr_password        = module.acr.acr_password
 
-  redis_url           = module.keyvault.redis_hostname_secret_value
-  redis_pwd           = module.keyvault.redis_primary_key_secret_value
+  redis_url           = module.redis.redis_hostname_secret_value
+  redis_pwd           = module.redis.redis_primary_key_secret_value
 
   tags                = var.tags
 }
@@ -107,9 +107,6 @@ module "aks" {
 # Deployment Kubernetes Manifest YAMLs
 resource "kubectl_manifest" "deployment" {
   yaml_body = templatefile("${path.module}/k8s-manifests/deployment.yaml.tftpl", {
-    docker_image_name       = module.acr.acr_image_url                  # Fully qualified Docker image URL
-    redis_hostname_secret   = var.redis_hostname_secret              # Redis hostname secret name
-    redis_primary_key_secret = var.redis_primary_key_secret          # Redis primary key secret name
     acr_login_server        = module.acr.acr_login_server              # ACR login server
     app_image_name = local.docker_image_name
     image_tag               = "latest"                                 # Docker image tag
@@ -121,6 +118,8 @@ resource "kubectl_manifest" "deployment" {
       value = "1"
     }
   }
+
+  depends_on = [kubectl_manifest.secret_provider]
 }
 
 # Kubernetes Service Manifest
@@ -138,13 +137,6 @@ resource "kubectl_manifest" "service" {
   depends_on = [kubectl_manifest.deployment] # Ensure the deployment is applied first
 }
 
-data "kubernetes_service" "service" {
-  metadata {
-    name = "redis-flask-app-service"
-  }
-  depends_on = [kubectl_manifest.service]
-  }
-
 resource "kubectl_manifest" "secret_provider" {
   yaml_body = templatefile("${path.module}/k8s-manifests/secret-provider.yaml.tftpl", {
     kv_name                  = local.keyvault_name                 # Add Key Vault name as `kv_name`
@@ -153,4 +145,14 @@ resource "kubectl_manifest" "secret_provider" {
     tenant_id              = data.azurerm_client_config.current.tenant_id # Azure Tenant ID
     aks_kv_access_identity_id = module.aks.aks_user_object_id      # AKS-managed identity ID for Key Vault access
   })
+
+  depends_on = [module.keyvault, module.redis]
+}
+
+data "kubernetes_service" "service" {
+  metadata {
+    name = "redis-flask-app-service"
+  }
+
+  depends_on = [kubectl_manifest.service]
 }

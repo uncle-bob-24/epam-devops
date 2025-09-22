@@ -8,23 +8,9 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name            = var.sku
   tenant_id    = data.azurerm_client_config.current.tenant_id
 
-  purge_protection_enabled = true
+  purge_protection_enabled = false
 
   tags = var.tags
-}
-
-# Secret: Redis hostname
-resource "azurerm_key_vault_secret" "redis_hostname" {
-  name         = var.redis_hostname_secret
-  value        = var.redis_hostname
-  key_vault_id = azurerm_key_vault.keyvault.id
-}
-
-# Secret: Redis primary key
-resource "azurerm_key_vault_secret" "redis_primary_key" {
-  name         = var.redis_primary_key_secret
-  value        = var.redis_primary_key
-  key_vault_id = azurerm_key_vault.keyvault.id
 }
 
 # Access Policy: Full access for the current user

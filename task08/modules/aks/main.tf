@@ -1,5 +1,3 @@
-data "azurerm_client_config" "current" {}
-
 # Create AKS Cluster
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.aks_name
@@ -12,7 +10,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size        = var.node_vm_size
     node_count     = var.node_count
     os_disk_type   = var.os_disk_type
-    enable_auto_scaling = false
+    os_disk_size_gb = 30
   }
 
   identity {
@@ -33,7 +31,7 @@ resource "azurerm_role_assignment" "acr_pull" {
 resource "azurerm_key_vault_access_policy" "aks_kv_access" {
   key_vault_id = var.keyvault_id
 
-  tenant_id = data.azurerm_client_config.current.tenant_id
+  tenant_id = azurerm_kubernetes_cluster.aks.identity[0].tenant_id
   object_id = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 
   secret_permissions = ["Get"] # Allow AKS to access secrets

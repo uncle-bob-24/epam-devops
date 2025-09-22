@@ -4,13 +4,13 @@ resource "azurerm_container_registry" "acr" {
   location            = var.location
   sku                 = var.acr_sku
 
-  admin_enabled = false
+  admin_enabled = true
 
   tags = var.tags
 }
 
 resource "azurerm_container_registry_task" "acr_task" {
-  name                 = "add_container"
+  name                 = "add_image"
   container_registry_id = azurerm_container_registry.acr.id
   platform {
     os = "Linux"
@@ -18,7 +18,7 @@ resource "azurerm_container_registry_task" "acr_task" {
   }
 
   docker_step {
-    dockerfile_path      = "application/Dockerfile"
+    dockerfile_path      = "task08/application/Dockerfile"
     context_path         = var.repository_url
     context_access_token = var.git_pat
     image_names          = ["${var.docker_image_name}:latest"]
@@ -35,4 +35,8 @@ resource "azurerm_container_registry_task" "acr_task" {
       token_type = "PAT"
     }
   }
+}
+
+resource "azurerm_container_registry_task_schedule_run_now" "build" {
+  container_registry_task_id = azurerm_container_registry_task.acr_task.id
 }
