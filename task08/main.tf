@@ -119,7 +119,6 @@ resource "kubectl_manifest" "deployment" {
     }
   }
 
-  depends_on = [kubectl_manifest.secret_provider]
 }
 
 # Kubernetes Service Manifest
@@ -137,6 +136,7 @@ resource "kubectl_manifest" "service" {
   depends_on = [kubectl_manifest.deployment] # Ensure the deployment is applied first
 }
 
+/*
 resource "kubectl_manifest" "secret_provider" {
   yaml_body = templatefile("${path.module}/k8s-manifests/secret-provider.yaml.tftpl", {
     kv_name                    = local.keyvault_name
@@ -148,6 +148,7 @@ resource "kubectl_manifest" "secret_provider" {
 
   depends_on = [module.keyvault, module.redis]
 }
+*/
 
 data "kubernetes_service" "service" {
   metadata {
