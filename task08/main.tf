@@ -16,9 +16,9 @@ module "keyvault" {
   sku                 = var.keyvault_sku
 
   # Arguments for Redis Secrets
-  redis_hostname      = module.redis.redis_hostname   # Redis hostname output from Redis module
-  redis_primary_key   = module.redis.redis_primary_key # Redis primary key output from Redis module
-  redis_hostname_secret = var.redis_hostname_secret
+  redis_hostname           = module.redis.redis_hostname    # Redis hostname output from Redis module
+  redis_primary_key        = module.redis.redis_primary_key # Redis primary key output from Redis module
+  redis_hostname_secret    = var.redis_hostname_secret
   redis_primary_key_secret = var.redis_primary_key_secret
 
   # Arguments for AKS Key Vault Integration
@@ -30,30 +30,30 @@ module "keyvault" {
 
 # Redis Module
 module "redis" {
-  source              = "./modules/redis"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.region
-  redis_name          = local.redis_name
-  capacity            = var.redis_capacity
-  sku_name            = var.redis_sku_name
-  sku_family          = var.redis_sku_family
-  keyvault_id         = module.keyvault.keyvault_id
-  redis_hostname_secret = var.redis_hostname_secret
+  source                   = "./modules/redis"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = var.region
+  redis_name               = local.redis_name
+  capacity                 = var.redis_capacity
+  sku_name                 = var.redis_sku_name
+  sku_family               = var.redis_sku_family
+  keyvault_id              = module.keyvault.keyvault_id
+  redis_hostname_secret    = var.redis_hostname_secret
   redis_primary_key_secret = var.redis_primary_key_secret
-  tags                = var.tags
+  tags                     = var.tags
 }
 
 # Container Registry Module
 module "acr" {
   source              = "./modules/acr"
-  acr_name            = local.acr_name                 # Use the name dynamically generated in locals
+  acr_name            = local.acr_name # Use the name dynamically generated in locals
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.region
   acr_sku             = var.acr_sku
   repository_url      = var.repository_url
   branch              = var.repository_branch
-  git_pat             = var.git_pat                    # Sensitive GitHub Personal Access Token (PAT)
-  docker_image_name   = local.docker_image_name        # Docker image name
+  git_pat             = var.git_pat             # Sensitive GitHub Personal Access Token (PAT)
+  docker_image_name   = local.docker_image_name # Docker image name
   tags                = var.tags
 }
 
@@ -65,51 +65,51 @@ module "aci" {
   location            = var.region
   aci_sku             = var.aci_sku
 
-  container_name      = local.docker_image_name
-  container_image     = module.acr.acr_image_url  # Pull Docker image from ACR
-  cpu                 = var.aci_cpu
-  memory              = var.aci_memory
-  container_port      = var.container_port
-  dns_name_label      = local.dns_name_label
+  container_name  = local.docker_image_name
+  container_image = module.acr.acr_image_url # Pull Docker image from ACR
+  cpu             = var.aci_cpu
+  memory          = var.aci_memory
+  container_port  = var.container_port
+  dns_name_label  = local.dns_name_label
 
   # Pass the acr_login_server output from the acr module
-  acr_login_server    = module.acr.acr_login_server
-  acr_username        = module.acr.acr_username
-  acr_password        = module.acr.acr_password
+  acr_login_server = module.acr.acr_login_server
+  acr_username     = module.acr.acr_username
+  acr_password     = module.acr.acr_password
 
-  redis_url           = module.redis.redis_hostname_secret_value
-  redis_pwd           = module.redis.redis_primary_key_secret_value
+  redis_url = module.redis.redis_hostname_secret_value
+  redis_pwd = module.redis.redis_primary_key_secret_value
 
-  tags                = var.tags
+  tags = var.tags
 }
 
 # AKS Module
 module "aks" {
   source = "./modules/aks"
 
-  aks_name                   = local.aks_name
-  resource_group_name        = azurerm_resource_group.rg.name
-  location                   = var.region
-  node_pool_name             = var.node_pool_name
-  node_count                 = var.node_count
-  node_vm_size               = var.node_vm_size
-  os_disk_type               = var.os_disk_type
+  aks_name            = local.aks_name
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.region
+  node_pool_name      = var.node_pool_name
+  node_count          = var.node_count
+  node_vm_size        = var.node_vm_size
+  os_disk_type        = var.os_disk_type
 
   # Pass the acr_id from the ACR module
-  acr_id                     = module.acr.acr_id
-  
-  keyvault_id                = module.keyvault.keyvault_id
-  redis_hostname_secret_name = var.redis_hostname_secret
+  acr_id = module.acr.acr_id
+
+  keyvault_id                   = module.keyvault.keyvault_id
+  redis_hostname_secret_name    = var.redis_hostname_secret
   redis_primary_key_secret_name = var.redis_primary_key_secret
-  tags                       = var.tags
+  tags                          = var.tags
 }
 
 # Deployment Kubernetes Manifest YAMLs
 resource "kubectl_manifest" "deployment" {
   yaml_body = templatefile("${path.module}/k8s-manifests/deployment.yaml.tftpl", {
-    acr_login_server        = module.acr.acr_login_server              # ACR login server
-    app_image_name = local.docker_image_name
-    image_tag               = "latest"                                 # Docker image tag
+    acr_login_server = module.acr.acr_login_server # ACR login server
+    app_image_name   = local.docker_image_name
+    image_tag        = "latest" # Docker image tag
   })
 
   wait_for {
@@ -139,11 +139,11 @@ resource "kubectl_manifest" "service" {
 
 resource "kubectl_manifest" "secret_provider" {
   yaml_body = templatefile("${path.module}/k8s-manifests/secret-provider.yaml.tftpl", {
-    kv_name                  = local.keyvault_name                 # Add Key Vault name as `kv_name`
-    redis_url_secret_name = var.redis_hostname_secret
+    kv_name                    = local.keyvault_name # Add Key Vault name as `kv_name`
+    redis_url_secret_name      = var.redis_hostname_secret
     redis_password_secret_name = var.redis_primary_key_secret
-    tenant_id              = data.azurerm_client_config.current.tenant_id # Azure Tenant ID
-    aks_kv_access_identity_id = module.aks.aks_user_object_id      # AKS-managed identity ID for Key Vault access
+    tenant_id                  = data.azurerm_client_config.current.tenant_id # Azure Tenant ID
+    aks_kv_access_identity_id  = module.aks.aks_user_object_id                # AKS-managed identity ID for Key Vault access
   })
 
   depends_on = [module.keyvault, module.redis]

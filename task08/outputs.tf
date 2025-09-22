@@ -8,6 +8,6 @@ output "aci_fqdn" {
 # Output: LoadBalancer IP using the manifest
 output "aks_lb_ip" {
   description = "LoadBalancer IP address of the app deployed in AKS"
-  value = data.kubernetes_service.service.status.0.load_balancer.0.ingress.0.ip
+  value       = data.kubernetes_service.service.status.0.load_balancer.0.ingress.0.ip
   sensitive   = false
 }
