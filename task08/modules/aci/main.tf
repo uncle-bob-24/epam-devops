@@ -5,6 +5,7 @@ resource "azurerm_container_group" "aci" {
   ip_address_type     = "Public"
   os_type             = "Linux"
   sku                 = var.aci_sku
+  dns_name_label      = var.container_name
 
   container {
     name   = var.container_name
@@ -27,8 +28,8 @@ resource "azurerm_container_group" "aci" {
 
     # Secure environment variables from Key Vault
     secure_environment_variables = {
-      REDIS_URL = var.redis_url # Redis hostname from Key Vault
-      REDIS_PWD = var.redis_pwd # Redis primary key from Key Vault
+      REDIS_URL = var.redis_url
+      REDIS_PWD = var.redis_pwd
     }
   }
 
