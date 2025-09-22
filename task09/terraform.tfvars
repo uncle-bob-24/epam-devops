@@ -1,0 +1,6 @@
+prefix           = "cmtr-65725fc3-mod9"
+location            = "West US"
+vnet_space          = "10.0.0.0/16"
+subnet_name         = "aks-snet"
+subnet_space        = "10.0.0.0/24"
+aks_loadbalancer_ip = "13.91.91.224"
