@@ -8,8 +8,7 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name            = var.sku
   tenant_id           = data.azurerm_client_config.current.tenant_id
   lifecycle {
-    prevent_destroy = true # Prevent Terraform from overwriting the secret
-    ignore_changes  = all  # Ignore all changes to the secret (optional)
+    ignore_changes = all # Ignore all changes to the secret (optional)
   }
   purge_protection_enabled = false
 
