@@ -1,112 +1,26 @@
-# General Configuration Variables
-variable "region" {
-  description = "Azure region to deploy the resources"
+variable "name_prefix" {
+  description = "Prefix name"
   type        = string
 }
 
-variable "tags" {
-  description = "Common tags applied to all resources"
-  type        = map(string)
-}
-
-# Redis Variables
-variable "redis_capacity" {
-  description = "Redis Cache capacity (1 = 250 MB, 2 = 1 GB)"
-  type        = number
-}
-
-variable "redis_sku_name" {
-  description = "SKU for Redis Cache"
+variable "location" {
+  description = "Azure region"
   type        = string
 }
 
-variable "redis_sku_family" {
-  description = "SKU family of Redis Cache"
+variable "acr_sku" {
+  description = "Azure Container Registry sku"
   type        = string
+  default     = "Basic"
 }
 
-# Key Vault Variables
-variable "redis_hostname_secret" {
-  description = "Key Vault secret name to store Redis hostname"
-  type        = string
-}
-
-variable "redis_primary_key_secret" {
-  description = "Key Vault secret name to store Redis primary key"
-  type        = string
-}
-
-# Git Personal Access Token (Sensitive for ACR Task)
 variable "git_pat" {
-  description = "GitHub Personal Access Token for accessing the repository"
+  description = "Personal access token for git repository"
   type        = string
   sensitive   = true
 }
 
-# ACI Variables
-variable "aci_sku" {
-  description = "SKU for Azure Container Instance"
-  type        = string
-}
-
-variable "aci_cpu" {
-  description = "CPU count for the container instance"
-  type        = number
-}
-
-variable "aci_memory" {
-  description = "Memory allocation for the container instance in GB"
-  type        = number
-}
-
-variable "container_port" {
-  description = "Port number to expose in the Azure Container Instance"
-  type        = number
-}
-
-# ACR Variables
-variable "acr_sku" {
-  description = "SKU for Azure Container Registry"
-  type        = string
-}
-
-variable "repository_url" {
-  description = "URL of the GitHub repository containing the Docker image source"
-  type        = string
-}
-
-variable "repository_branch" {
-  description = "Branch name to use for the container registry task"
-  type        = string
-}
-
-# AKS Variables
-variable "node_pool_name" {
-  description = "Node pool name for AKS cluster"
-  type        = string
-}
-
-variable "node_count" {
-  description = "Number of nodes in the default node pool"
-  type        = number
-}
-
-variable "node_vm_size" {
-  description = "VM size for nodes in the AKS default node pool"
-  type        = string
-}
-
-variable "os_disk_type" {
-  description = "Disk type for nodes (Ephemeral or Managed)"
-  type        = string
-}
-
-variable "keyvault_sku" {
-  description = "SKU for the Azure Key Vault (standard or premium)"
-  type        = string
-}
-
-variable "prefix" {
-  description = "Name prefix"
+variable "git_repo_url" {
+  description = "Git repository URL"
   type        = string
 }

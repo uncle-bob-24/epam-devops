@@ -1,43 +1,38 @@
 resource "azurerm_container_group" "aci" {
-  name                = var.aci_name
-  resource_group_name = var.resource_group_name
+  name                = var.name
   location            = var.location
+  resource_group_name = var.resource_group_name
   ip_address_type     = "Public"
+  dns_name_label      = var.name
   os_type             = "Linux"
-  sku                 = var.aci_sku
 
   container {
-    name   = var.container_name
-    image  = var.container_image # Docker image pulled from ACR
-    cpu    = var.cpu
-    memory = var.memory
+    name   = "app"
+    image  = "${var.acr_login_server}/${var.image_name}:latest"
+    cpu    = "0.5"
+    memory = "1.5"
 
-    # Define public ports for external access
     ports {
-      port     = var.container_port
+      port     = 8080
       protocol = "TCP"
     }
 
-    # Unsecured environment variables
     environment_variables = {
-      CREATOR        = "ACI"  # Identifier for ACI (non-sensitive)
-      REDIS_PORT     = "6380" # Connect to Redis on SSL port
-      REDIS_SSL_MODE = "True" # Enable Redis SSL mode
+      CREATOR        = "ACI"
+      REDIS_PORT     = "6380"
+      REDIS_SSL_MODE = "true"
     }
 
-    # Secure environment variables from Key Vault
     secure_environment_variables = {
-      REDIS_URL = var.redis_url # Redis hostname from Key Vault
-      REDIS_PWD = var.redis_pwd # Redis primary key from Key Vault
+      REDIS_URL = var.redis_hostname
+      REDIS_PWD = var.redis_primary_key
     }
   }
 
-
-  # Reference ACR credentials for pulling images
   image_registry_credential {
-    server   = var.acr_login_server # ACR registry login server
-    username = var.acr_username     # ACR username
-    password = var.acr_password     # ACR password (sensitive)
+    server   = var.acr_login_server
+    username = var.acr_username
+    password = var.acr_password
   }
 
   tags = var.tags
