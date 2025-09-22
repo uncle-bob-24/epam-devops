@@ -75,8 +75,8 @@ variable "repository_url" {
   type        = string
 }
 
-variable "repository_branch" {
-  description = "Branch name to use for the container registry task"
+variable "dockerfile_path" {
+  description = "Path to docker file"
   type        = string
 }
 

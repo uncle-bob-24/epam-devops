@@ -24,8 +24,8 @@ variable "repository_url" {
   type        = string
 }
 
-variable "branch" {
-  description = "The branch in the repository to build Docker images from"
+variable "dockerfile_path" {
+  description = "The path to dockerfile"
   type        = string
 }
 

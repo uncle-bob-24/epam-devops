@@ -42,7 +42,7 @@ module "acr" {
   location            = var.region
   acr_sku             = var.acr_sku
   repository_url      = var.repository_url
-  branch              = var.repository_branch
+  dockerfile_path     = var.dockerfile_path
   git_pat             = var.git_pat             # Sensitive GitHub Personal Access Token (PAT)
   docker_image_name   = local.docker_image_name # Docker image name
   tags                = var.tags
