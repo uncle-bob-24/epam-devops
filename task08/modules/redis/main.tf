@@ -1,11 +1,11 @@
 # Create Azure Redis Cache instance
 resource "azurerm_redis_cache" "redis" {
-  name                = var.redis_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  capacity            = var.capacity
-  sku_name            = var.sku_name
-  family              = var.sku_family
+  name                 = var.redis_name
+  location             = var.location
+  resource_group_name  = var.resource_group_name
+  capacity             = var.capacity
+  sku_name             = var.sku_name
+  family               = var.sku_family
   non_ssl_port_enabled = false # Enforce SSL connections only (replaces enable_non_ssl_port)
 
   minimum_tls_version = "1.2"

@@ -10,10 +10,10 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_container_registry_task" "acr_task" {
-  name                 = "add_image"
+  name                  = "add_image"
   container_registry_id = azurerm_container_registry.acr.id
   platform {
-    os = "Linux"
+    os           = "Linux"
     architecture = "amd64"
   }
 
