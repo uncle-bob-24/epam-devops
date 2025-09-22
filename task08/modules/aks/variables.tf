@@ -40,22 +40,6 @@ variable "acr_id" {
   type        = string
 }
 
-# Key Vault Secrets
-variable "keyvault_id" {
-  description = "The ID of the Azure Key Vault to enable secrets access for the AKS cluster"
-  type        = string
-}
-
-variable "redis_hostname_secret_name" {
-  description = "Name of the Key Vault secret containing the Redis hostname"
-  type        = string
-}
-
-variable "redis_primary_key_secret_name" {
-  description = "Name of the Key Vault secret containing the Redis primary key"
-  type        = string
-}
-
 # Tags
 variable "tags" {
   description = "Tags applied to AKS resources"

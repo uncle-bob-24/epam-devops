@@ -96,13 +96,10 @@ module "aks" {
 
   # Pass the acr_id from the ACR module
   acr_id = module.acr.acr_id
-
-  keyvault_id                   = module.keyvault.keyvault_id
-  redis_hostname_secret_name    = var.redis_hostname_secret
-  redis_primary_key_secret_name = var.redis_primary_key_secret
-  tags                          = var.tags
+  tags   = var.tags
 }
 
+/*
 # Deployment Kubernetes Manifest YAMLs
 resource "kubectl_manifest" "deployment" {
   yaml_body = templatefile("${path.module}/k8s-manifests/deployment.yaml.tftpl", {
@@ -120,6 +117,7 @@ resource "kubectl_manifest" "deployment" {
   }
 
 }
+*/
 
 # Kubernetes Service Manifest
 resource "kubectl_manifest" "service" {
@@ -133,7 +131,6 @@ resource "kubectl_manifest" "service" {
     }
   }
 
-  depends_on = [kubectl_manifest.deployment] # Ensure the deployment is applied first
 }
 
 /*
@@ -144,6 +141,11 @@ resource "kubectl_manifest" "secret_provider" {
     redis_password_secret_name = var.redis_primary_key_secret
     tenant_id                  = data.azurerm_client_config.current.tenant_id
     aks_kv_access_identity_id  = module.aks.aks_user_object_id
+    
+  keyvault_id                   = module.keyvault.keyvault_id
+  redis_hostname_secret_name    = var.redis_hostname_secret
+  redis_primary_key_secret_name = var.redis_primary_key_secret
+  tags                          = var.tags
   })
 
   depends_on = [module.keyvault, module.redis]
