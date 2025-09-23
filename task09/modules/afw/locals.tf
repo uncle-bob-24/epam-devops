@@ -89,9 +89,9 @@ locals {
   # App rule FQDNs - expanded with more comprehensive AKS-related domains
   app_rule_fqdns = [
     # Azure AKS required FQDNs
-    "*.hcp.northeurope.azmk8s.io",
-    "*.tun.northeurope.azmk8s.io",
-    "aks-engine-fqdn.northeurope.cloudapp.azure.com",
+    "*.hcp.westus.azmk8s.io",
+    "*.tun.westus.azmk8s.io",
+    "aks-engine-fqdn.westus.cloudapp.azure.com",
 
     # Azure services
     "*.aks-ingress.microsoft.com",

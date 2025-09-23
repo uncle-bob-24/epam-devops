@@ -17,7 +17,7 @@ data "azurerm_subnet" "aks_subnet" {
 # Deploy the firewall module
 module "afw" {
   source                 = "./modules/afw"
-  prefix              = var.prefix
+  prefix                 = var.prefix
   location               = var.location
   resource_group_name    = local.rg_name
   vnet_name              = local.vnet_name

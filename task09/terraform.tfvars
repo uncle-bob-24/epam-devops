@@ -1,4 +1,4 @@
-prefix           = "cmtr-65725fc3-mod9"
+prefix              = "cmtr-65725fc3-mod9"
 location            = "West US"
 vnet_space          = "10.0.0.0/16"
 subnet_name         = "aks-snet"
